@@ -1,0 +1,2105 @@
+[{
+        "id": "ef6c05f4.6dcba8",
+        "type": "tab",
+        "label": "Domoticz to HA",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a52dd6f7.34ea5",
+        "type": "tab",
+        "label": "ESP Signal",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "7750cd37.94cdd4",
+        "type": "tab",
+        "label": "Sonoff MQTT",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "faf8b086.5ba97",
+        "type": "tab",
+        "label": "Sonoff Web Info",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "91e5cb32.258a3",
+        "type": "mqtt-broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "verifyservercert": true,
+        "compatmode": true,
+        "keepalive": 15,
+        "cleansession": true,
+        "willQos": "0",
+        "birthQos": "0"
+    },
+    {
+        "id": "ff10475.d0b03b8",
+        "type": "ui_tab",
+        "z": "ef6c05f4.6dcba8",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": "1"
+    },
+    {
+        "id": "ca3bcef0.519518",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "192.168.1.80",
+        "port": "1883",
+        "clientid": "node-red",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "1cd05af5.89c0e5",
+        "type": "ui_tab",
+        "z": "",
+        "name": "ESP Signal",
+        "icon": "network_check",
+        "order": 4
+    },
+    {
+        "id": "cb8d342.bbd86c8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": "1"
+    },
+    {
+        "id": "5bb95986.4dc298",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "domo.home.intra",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "5373de13.fe748",
+        "type": "mqtt in",
+        "z": "ef6c05f4.6dcba8",
+        "name": "Domoticz",
+        "topic": "domoticz/out",
+        "broker": "91e5cb32.258a3",
+        "x": 386,
+        "y": 293.5,
+        "wires": [
+            [
+                "a3dc7106.b2df18"
+            ]
+        ]
+    },
+    {
+        "id": "7a9f51c9.cc7ec",
+        "type": "switch",
+        "z": "ef6c05f4.6dcba8",
+        "name": "Switch Data",
+        "property": "payload.idx",
+        "propertyType": "msg",
+        "rules": [{
+                "t": "eq",
+                "v": "215",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "166",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 613,
+        "y": 290.5,
+        "wires": [
+            [
+                "c2f7e417.7438b"
+            ],
+            [
+                "1ffe8298.b7f39d"
+            ]
+        ]
+    },
+    {
+        "id": "a3dc7106.b2df18",
+        "type": "json",
+        "z": "ef6c05f4.6dcba8",
+        "name": "Data",
+        "x": 507,
+        "y": 186.5,
+        "wires": [
+            [
+                "7a9f51c9.cc7ec"
+            ]
+        ]
+    },
+    {
+        "id": "c2f7e417.7438b",
+        "type": "mqtt out",
+        "z": "ef6c05f4.6dcba8",
+        "name": "",
+        "topic": "temperature/tara",
+        "qos": "",
+        "retain": "",
+        "broker": "91e5cb32.258a3",
+        "x": 829,
+        "y": 235,
+        "wires": []
+    },
+    {
+        "id": "1ffe8298.b7f39d",
+        "type": "mqtt out",
+        "z": "ef6c05f4.6dcba8",
+        "name": "",
+        "topic": "temperature/buiten",
+        "qos": "",
+        "retain": "",
+        "broker": "91e5cb32.258a3",
+        "x": 850,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d6eb9dbb.9593b",
+        "type": "mqtt in",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "/Sonoff1/Uptime/",
+        "qos": "0",
+        "broker": "ca3bcef0.519518",
+        "x": 116.66665649414062,
+        "y": 111.66666412353516,
+        "wires": [
+            [
+                "8e4d06d4.cc5a3"
+            ]
+        ]
+    },
+    {
+        "id": "521b1bc0.d9cef4",
+        "type": "ui_text",
+        "z": "a52dd6f7.34ea5",
+        "name": "Uptime",
+        "group": "dbcddf8f.6d3bb",
+        "order": 1,
+        "format": "{{msg.payload}}",
+        "x": 581.6666946411133,
+        "y": 112.66669464111328,
+        "wires": []
+    },
+    {
+        "id": "971e1f43.e180c8",
+        "type": "mqtt in",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "/Sonoff1/Wifi/",
+        "qos": "0",
+        "broker": "ca3bcef0.519518",
+        "x": 103.66665649414062,
+        "y": 252.66669464111328,
+        "wires": [
+            [
+                "63c37425.c3102c",
+                "1a47dd50.619c53"
+            ]
+        ]
+    },
+    {
+        "id": "63c37425.c3102c",
+        "type": "ui_gauge",
+        "z": "a52dd6f7.34ea5",
+        "name": "Wifi gauge",
+        "group": "dbcddf8f.6d3bb",
+        "order": 2,
+        "format": "{{value}}",
+        "min": "-100",
+        "max": "-50",
+        "x": 404.6666564941406,
+        "y": 253.66669464111328,
+        "wires": []
+    },
+    {
+        "id": "6d9af364.2b00d4",
+        "type": "comment",
+        "z": "a52dd6f7.34ea5",
+        "name": "ESP Signal monitor",
+        "info": "",
+        "x": 127.66665649414062,
+        "y": 55.666664123535156,
+        "wires": []
+    },
+    {
+        "id": "1a47dd50.619c53",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "From last update",
+        "func": "var temp = global.get(\"Sonoff1_wifi\");\nvar current = new Date();\nif (temp!== undefined && temp!==null) {\n    msg.payload = current.getTime() - temp;\n    global.set(\"Sonoff1_wifi\",current.getTime());\n} else {\n    msg.payload = \"\";\n    global.set(\"Sonoff1_wifi\",current.getTime());\n}\n\n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});\n\nmsg.formattedtime = dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 423.66666412353516,
+        "y": 299.6666946411133,
+        "wires": [
+            [
+                "3db4293b.9026ee"
+            ]
+        ]
+    },
+    {
+        "id": "3db4293b.9026ee",
+        "type": "ui_text",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "group": "dbcddf8f.6d3bb",
+        "order": 3,
+        "format": "{{msg.payload}}",
+        "x": 701.6666564941406,
+        "y": 306.6666946411133,
+        "wires": []
+    },
+    {
+        "id": "6bcb706b.4b715",
+        "type": "comment",
+        "z": "a52dd6f7.34ea5",
+        "name": "Monitor sonoff restart",
+        "info": "",
+        "x": 365.3333206176758,
+        "y": 56.33325958251953,
+        "wires": []
+    },
+    {
+        "id": "8e4d06d4.cc5a3",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Save last uptime",
+        "func": "var devicename = \"Sonoff1\";\nvar varname = devicename + \"_uptime\";\n\nif (global.get(varname)!==undefined) {\n    if (parseInt(msg.payload)<global.get(varname)) {\n        msg.warning_text= devicename + \" restarted: \" + global.get(varname) + \" -> \" + msg.payload;\n        msg.device = devicename;\n        msg.warning=true;\n    } else {\n        msg.warning=false;\n    }\n}\n\nglobal.set(varname,parseInt(msg.payload));\n\nif (msg.warning) {\n    node.status({fill:\"red\",shape:\"dot\",text:msg.warning_text});\n} else {\n    node.status({fill:\"green\",shape:\"dot\",text:\"Current uptime: \"+global.get(varname)});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 357.3333206176758,
+        "y": 112.66663360595703,
+        "wires": [
+            [
+                "521b1bc0.d9cef4",
+                "4b94d51b.9c1e24"
+            ]
+        ]
+    },
+    {
+        "id": "4b94d51b.9c1e24",
+        "type": "switch",
+        "z": "a52dd6f7.34ea5",
+        "name": "Restart?",
+        "property": "warning",
+        "propertyType": "msg",
+        "rules": [{
+            "t": "true"
+        }],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 576.3333206176758,
+        "y": 169.66663360595703,
+        "wires": [
+            [
+                "1a5b197b.3da287"
+            ]
+        ]
+    },
+    {
+        "id": "1a5b197b.3da287",
+        "type": "change",
+        "z": "a52dd6f7.34ea5",
+        "name": "Toast message",
+        "rules": [{
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "device",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "warning_text",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 769.3333206176758,
+        "y": 169.66663360595703,
+        "wires": [
+            [
+                "5358678a.58842"
+            ]
+        ]
+    },
+    {
+        "id": "5358678a.58842",
+        "type": "link out",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "links": [
+            "3e084f74.ca14"
+        ],
+        "x": 921.1904487609863,
+        "y": 169.23805236816406,
+        "wires": []
+    },
+    {
+        "id": "dbc57f20.256ec8",
+        "type": "ui_text",
+        "z": "a52dd6f7.34ea5",
+        "name": "Last Update",
+        "group": "dbcddf8f.6d3bb",
+        "order": 3,
+        "format": "{{msg.payload}}",
+        "x": 688.3333206176758,
+        "y": 355.66663360595703,
+        "wires": []
+    },
+    {
+        "id": "4d56b674.d03768",
+        "type": "inject",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "x": 216.33332061767578,
+        "y": 357.66663360595703,
+        "wires": [
+            [
+                "2718faa.cf1e286"
+            ]
+        ]
+    },
+    {
+        "id": "2718faa.cf1e286",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "From last update",
+        "func": "var temp = global.get(\"Sonoff1_wifi\");\nvar current = new Date();\nmsg.payload = \"No data\";\n\nif (temp!==undefined) {\n    current = current - temp;\n    current = Math.floor(current/1000);\n    var minute = Math.floor(current/60);\n    var hour = Math.floor(minute/60);\n    var day = Math.floor(hour/24);\n    if (current>24*60*60) {\n        msg.payload = \"Last update \" + day + \" days, \" + hour%24 + \" hours, \" + minute%60 + \" minutes, \" + current%60 + \" seconds ago\";\n    } else if (current>60*60) {\n        msg.payload = \"Last update \" + hour%24 + \" hours, \" + minute%60 + \" minutes, \" + current%60 + \" seconds ago\";\n    } else if (current>60) {\n        msg.payload = \"Last update \" + minute%60 + \" minutes, \" + current%60 + \" seconds ago\";\n    } else {\n        msg.payload = \"Last update \" + current%60 + \" seconds ago\";\n    }\n}\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.payload});\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 428.3333206176758,
+        "y": 357.66663360595703,
+        "wires": [
+            [
+                "dbc57f20.256ec8"
+            ]
+        ]
+    },
+    {
+        "id": "6dd89fd1.235208",
+        "type": "mqtt in",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "/RGB/Uptime/",
+        "qos": "0",
+        "broker": "ca3bcef0.519518",
+        "x": 97.66665649414062,
+        "y": 479.6666564941406,
+        "wires": [
+            [
+                "ad4b23db.7a6cf8"
+            ]
+        ]
+    },
+    {
+        "id": "d5424a7a.0c2c08",
+        "type": "ui_text",
+        "z": "a52dd6f7.34ea5",
+        "name": "Uptime",
+        "group": "93b2800.e16a08",
+        "order": 1,
+        "format": "{{msg.payload}}",
+        "x": 572.6666946411133,
+        "y": 480.66668701171875,
+        "wires": []
+    },
+    {
+        "id": "ef80b94.2b7e448",
+        "type": "mqtt in",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "/RGB/Wifi/",
+        "qos": "0",
+        "broker": "ca3bcef0.519518",
+        "x": 84.66665649414062,
+        "y": 620.6666870117188,
+        "wires": [
+            [
+                "f76c523e.ddadf8",
+                "c55a4186.72fff"
+            ]
+        ]
+    },
+    {
+        "id": "f76c523e.ddadf8",
+        "type": "ui_gauge",
+        "z": "a52dd6f7.34ea5",
+        "name": "Wifi gauge",
+        "group": "93b2800.e16a08",
+        "order": 2,
+        "format": "{{value}}",
+        "min": "-100",
+        "max": "-50",
+        "x": 395.6666564941406,
+        "y": 621.6666870117188,
+        "wires": []
+    },
+    {
+        "id": "1b6d4adc.05aac5",
+        "type": "comment",
+        "z": "a52dd6f7.34ea5",
+        "name": "H801 Signal monitor",
+        "info": "",
+        "x": 118.66665649414062,
+        "y": 423.6666564941406,
+        "wires": []
+    },
+    {
+        "id": "c55a4186.72fff",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "From last update",
+        "func": "var temp = global.get(\"RGB_wifi\");\nvar current = new Date();\nif (temp!== undefined && temp!==null) {\n    msg.payload = current.getTime() - temp;\n    global.set(\"RGB_wifi\",current.getTime());\n} else {\n    msg.payload = \"\";\n    global.set(\"RGB_wifi\",current.getTime());\n}\n\n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});\n\nmsg.formattedtime = dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 412.6666564941406,
+        "y": 674.6666870117188,
+        "wires": [
+            [
+                "448f79a6.cea0d8"
+            ]
+        ]
+    },
+    {
+        "id": "448f79a6.cea0d8",
+        "type": "ui_text",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "group": "93b2800.e16a08",
+        "order": 3,
+        "format": "{{msg.payload}}",
+        "x": 692.6666564941406,
+        "y": 674.6666870117188,
+        "wires": []
+    },
+    {
+        "id": "3ee932c8.c89a56",
+        "type": "comment",
+        "z": "a52dd6f7.34ea5",
+        "name": "Monitor sonoff restart",
+        "info": "",
+        "x": 356.3333206176758,
+        "y": 424.333251953125,
+        "wires": []
+    },
+    {
+        "id": "ad4b23db.7a6cf8",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Save last uptime",
+        "func": "var devicename = \"RGB\";\nvar varname = devicename + \"_uptime\";\n\nif (global.get(varname)!==undefined) {\n    if (parseInt(msg.payload)<global.get(varname)) {\n        msg.warning_text= devicename + \" restarted: \" + global.get(varname) + \" -> \" + msg.payload;\n        msg.device = devicename;\n        msg.warning=true;\n    } else {\n        msg.warning=false;\n    }\n}\n\nglobal.set(varname,parseInt(msg.payload));\n\nif (msg.warning) {\n    node.status({fill:\"red\",shape:\"dot\",text:msg.warning_text});\n} else {\n    node.status({fill:\"green\",shape:\"dot\",text:\"Current uptime: \"+global.get(varname)});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 348.3333206176758,
+        "y": 480.6666259765625,
+        "wires": [
+            [
+                "d5424a7a.0c2c08",
+                "13b42bed.7fb784"
+            ]
+        ]
+    },
+    {
+        "id": "13b42bed.7fb784",
+        "type": "switch",
+        "z": "a52dd6f7.34ea5",
+        "name": "Restart?",
+        "property": "warning",
+        "propertyType": "msg",
+        "rules": [{
+            "t": "true"
+        }],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 567.3333206176758,
+        "y": 537.6666259765625,
+        "wires": [
+            [
+                "569e2dce.3219cc"
+            ]
+        ]
+    },
+    {
+        "id": "569e2dce.3219cc",
+        "type": "change",
+        "z": "a52dd6f7.34ea5",
+        "name": "Toast message",
+        "rules": [{
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "device",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "warning_text",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760.3333206176758,
+        "y": 537.6666259765625,
+        "wires": [
+            [
+                "2cf66ff1.9cf258"
+            ]
+        ]
+    },
+    {
+        "id": "2cf66ff1.9cf258",
+        "type": "link out",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "links": [
+            "3e084f74.ca14"
+        ],
+        "x": 912.1904487609863,
+        "y": 537.2380447387695,
+        "wires": []
+    },
+    {
+        "id": "120ad0f.449982f",
+        "type": "ui_text",
+        "z": "a52dd6f7.34ea5",
+        "name": "Last Update",
+        "group": "93b2800.e16a08",
+        "order": 3,
+        "format": "{{msg.payload}}",
+        "x": 673.6666641235352,
+        "y": 731.08349609375,
+        "wires": []
+    },
+    {
+        "id": "de94c983.a2eed8",
+        "type": "inject",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "x": 201.66666412353516,
+        "y": 733.08349609375,
+        "wires": [
+            [
+                "5499ca40.2b82fc"
+            ]
+        ]
+    },
+    {
+        "id": "5499ca40.2b82fc",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "From last update",
+        "func": "var temp = global.get(\"RGB_wifi\");\nvar current = new Date();\nmsg.payload = \"No data\";\n\nif (temp!==undefined) {\n    current = current - temp;\n    current = Math.floor(current/1000);\n    var minute = Math.floor(current/60);\n    var hour = Math.floor(minute/60);\n    var day = Math.floor(hour/24);\n    if (current>24*60*60) {\n        msg.payload = \"Last update \" + day + \" days, \" + hour%24 + \" hours, \" + minute%60 + \" minutes, \" + current%60 + \" seconds ago\";\n    } else if (current>60*60) {\n        msg.payload = \"Last update \" + hour%24 + \" hours, \" + minute%60 + \" minutes, \" + current%60 + \" seconds ago\";\n    } else if (current>60) {\n        msg.payload = \"Last update \" + minute%60 + \" minutes, \" + current%60 + \" seconds ago\";\n    } else {\n        msg.payload = \"Last update \" + current%60 + \" seconds ago\";\n    }\n}\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.payload});\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 413.66666412353516,
+        "y": 733.08349609375,
+        "wires": [
+            [
+                "120ad0f.449982f"
+            ]
+        ]
+    },
+    {
+        "id": "399c4ebc.71b70a",
+        "type": "inject",
+        "z": "a52dd6f7.34ea5",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "x": 120.66665649414062,
+        "y": 932.3333740234375,
+        "wires": [
+            [
+                "44cbbacd.22b1e4",
+                "26e5fa91.756f06",
+                "dc35877.52c1ef8",
+                "4370197a.cbc348",
+                "191bf990.fae31e",
+                "93e1abbe.1636e8",
+                "9f44fe62.bf738"
+            ]
+        ]
+    },
+    {
+        "id": "44cbbacd.22b1e4",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff 1 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.117/",
+        "tls": "",
+        "x": 338.66666412353516,
+        "y": 931.3333339691162,
+        "wires": [
+            [
+                "9d675609.4e8928"
+            ]
+        ]
+    },
+    {
+        "id": "9d675609.4e8928",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"Sonoff1_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"Sonoff1_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];\n\n",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 578.6665420532227,
+        "y": 940.3333339691162,
+        "wires": [
+            [
+                "b30c79e5.2dec78",
+                "f68b6f70.602638"
+            ],
+            [
+                "b30c79e5.2dec78",
+                "f68b6f70.602638"
+            ],
+            [
+                "b30c79e5.2dec78",
+                "f68b6f70.602638"
+            ],
+            [
+                "b30c79e5.2dec78",
+                "f68b6f70.602638"
+            ],
+            [
+                "b30c79e5.2dec78",
+                "f68b6f70.602638"
+            ]
+        ]
+    },
+    {
+        "id": "b30c79e5.2dec78",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff 1 chart",
+        "group": "dbcddf8f.6d3bb",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 861.6666564941406,
+        "y": 929.3333740234375,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "168cf611.8a6262",
+        "type": "comment",
+        "z": "a52dd6f7.34ea5",
+        "name": "Web response statistics",
+        "info": "",
+        "x": 134.16663360595703,
+        "y": 822.3333339691162,
+        "wires": []
+    },
+    {
+        "id": "2f615d17.edac9a",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Reset chart",
+        "func": "//stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\nglobal.set(\"Sonoff1_webstat\",undefined);\nglobal.set(\"H801_webstat\",undefined);\nglobal.set(\"Sonoff2_webstat\",undefined);\nglobal.set(\"Sonoff3_webstat\",undefined);\nglobal.set(\"Sonoff4_webstat\",undefined);\nglobal.set(\"Sonoff5_webstat\",undefined);\nglobal.set(\"Sonoff6_webstat\",undefined);\nmsg.payload = [];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 596.166633605957,
+        "y": 879.3333339691162,
+        "wires": [
+            [
+                "b30c79e5.2dec78",
+                "f68b6f70.602638",
+                "dd5ded8a.bdb1e",
+                "af9b03f2.6202b8",
+                "19565f51.2ff871",
+                "f5c375b1.eb92d",
+                "fc59ac98.cb7eb8",
+                "8bdbde15.834be",
+                "b3a5e37a.e687e",
+                "65da4c1.14e5b34",
+                "72b29958.170ed",
+                "bf69b1f9.f2928",
+                "f7b35551.cb1f8",
+                "1f479055.e1f1e8"
+            ]
+        ]
+    },
+    {
+        "id": "11f2f77a.c39411",
+        "type": "inject",
+        "z": "a52dd6f7.34ea5",
+        "name": "Full reset",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 112.16663360595703,
+        "y": 880.3333339691162,
+        "wires": [
+            [
+                "2f615d17.edac9a"
+            ]
+        ]
+    },
+    {
+        "id": "f68b6f70.602638",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff 1 chart",
+        "group": "dbcddf8f.6d3bb",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 861.166633605957,
+        "y": 970.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "26e5fa91.756f06",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "H801 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.126/",
+        "tls": "",
+        "x": 337.16666412353516,
+        "y": 1036.3333339691162,
+        "wires": [
+            [
+                "bada16f7.425f4"
+            ]
+        ]
+    },
+    {
+        "id": "bada16f7.425f4",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"H801_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"H801_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];\n",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 583.1666412353516,
+        "y": 1033.333293914795,
+        "wires": [
+            [
+                "dd5ded8a.bdb1e",
+                "af9b03f2.6202b8"
+            ],
+            [
+                "dd5ded8a.bdb1e",
+                "af9b03f2.6202b8"
+            ],
+            [
+                "dd5ded8a.bdb1e",
+                "af9b03f2.6202b8"
+            ],
+            [
+                "dd5ded8a.bdb1e",
+                "af9b03f2.6202b8"
+            ],
+            [
+                "dd5ded8a.bdb1e",
+                "af9b03f2.6202b8"
+            ]
+        ]
+    },
+    {
+        "id": "dd5ded8a.bdb1e",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "H801 chart",
+        "group": "93b2800.e16a08",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 860.1666641235352,
+        "y": 1033.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "af9b03f2.6202b8",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "H801 chart",
+        "group": "93b2800.e16a08",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 859.6666412353516,
+        "y": 1074.333293914795,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "dc35877.52c1ef8",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff2 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.128/",
+        "tls": "",
+        "x": 340.16666412353516,
+        "y": 1126.3333339691162,
+        "wires": [
+            [
+                "64c3f486.6082d4"
+            ]
+        ]
+    },
+    {
+        "id": "64c3f486.6082d4",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"Sonoff2_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"Sonoff2_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];\n",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 576.166633605957,
+        "y": 1124.3333339691162,
+        "wires": [
+            [
+                "19565f51.2ff871",
+                "f5c375b1.eb92d"
+            ],
+            [
+                "19565f51.2ff871",
+                "f5c375b1.eb92d"
+            ],
+            [
+                "19565f51.2ff871",
+                "f5c375b1.eb92d"
+            ],
+            [
+                "19565f51.2ff871",
+                "f5c375b1.eb92d"
+            ],
+            [
+                "19565f51.2ff871",
+                "f5c375b1.eb92d"
+            ]
+        ]
+    },
+    {
+        "id": "19565f51.2ff871",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff2 chart",
+        "group": "4db6d9c8.0c4348",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 863.1666564941406,
+        "y": 1124.3333740234375,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f5c375b1.eb92d",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff2 chart",
+        "group": "4db6d9c8.0c4348",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 862.666633605957,
+        "y": 1165.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4370197a.cbc348",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff3 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.130",
+        "tls": "",
+        "x": 342.16663360595703,
+        "y": 1219.3333339691162,
+        "wires": [
+            [
+                "3ab38c8.b491ef4"
+            ]
+        ]
+    },
+    {
+        "id": "3ab38c8.b491ef4",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"Sonoff3_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"Sonoff3_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];\n",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 578.1666030883789,
+        "y": 1217.3333339691162,
+        "wires": [
+            [
+                "fc59ac98.cb7eb8",
+                "8bdbde15.834be"
+            ],
+            [
+                "fc59ac98.cb7eb8",
+                "8bdbde15.834be"
+            ],
+            [
+                "fc59ac98.cb7eb8",
+                "8bdbde15.834be"
+            ],
+            [
+                "fc59ac98.cb7eb8",
+                "8bdbde15.834be"
+            ],
+            [
+                "fc59ac98.cb7eb8",
+                "8bdbde15.834be"
+            ]
+        ]
+    },
+    {
+        "id": "fc59ac98.cb7eb8",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff3 chart",
+        "group": "81bd4251.d9dd5",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 865.1666259765625,
+        "y": 1217.3333740234375,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8bdbde15.834be",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff3 chart",
+        "group": "81bd4251.d9dd5",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 864.6666030883789,
+        "y": 1258.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "191bf990.fae31e",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff4 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.131",
+        "tls": "",
+        "x": 330.16663360595703,
+        "y": 1308.3333339691162,
+        "wires": [
+            [
+                "86207532.b47868"
+            ]
+        ]
+    },
+    {
+        "id": "86207532.b47868",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"Sonoff4_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"Sonoff4_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];\n",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 566.1666030883789,
+        "y": 1306.3333339691162,
+        "wires": [
+            [
+                "b3a5e37a.e687e",
+                "65da4c1.14e5b34"
+            ],
+            [
+                "b3a5e37a.e687e",
+                "65da4c1.14e5b34"
+            ],
+            [
+                "b3a5e37a.e687e",
+                "65da4c1.14e5b34"
+            ],
+            [
+                "b3a5e37a.e687e",
+                "65da4c1.14e5b34"
+            ],
+            [
+                "b3a5e37a.e687e",
+                "65da4c1.14e5b34"
+            ]
+        ]
+    },
+    {
+        "id": "b3a5e37a.e687e",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff4 chart",
+        "group": "b7a752fd.d9df8",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 853.1666259765625,
+        "y": 1306.3333740234375,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "65da4c1.14e5b34",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff4 chart",
+        "group": "b7a752fd.d9df8",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 852.6666030883789,
+        "y": 1347.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "93e1abbe.1636e8",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff5 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.132",
+        "tls": "",
+        "x": 322.16663360595703,
+        "y": 1395.3333339691162,
+        "wires": [
+            [
+                "2b9c792f.8c23b6"
+            ]
+        ]
+    },
+    {
+        "id": "2b9c792f.8c23b6",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"Sonoff5_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"Sonoff5_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 558.1666030883789,
+        "y": 1393.3333339691162,
+        "wires": [
+            [
+                "72b29958.170ed",
+                "bf69b1f9.f2928"
+            ],
+            [
+                "72b29958.170ed",
+                "bf69b1f9.f2928"
+            ],
+            [
+                "72b29958.170ed",
+                "bf69b1f9.f2928"
+            ],
+            [
+                "72b29958.170ed",
+                "bf69b1f9.f2928"
+            ],
+            [
+                "72b29958.170ed",
+                "bf69b1f9.f2928"
+            ]
+        ]
+    },
+    {
+        "id": "72b29958.170ed",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff5 chart",
+        "group": "8368d062.acf45",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 845.1666259765625,
+        "y": 1393.3333740234375,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "bf69b1f9.f2928",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff5 chart",
+        "group": "8368d062.acf45",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 844.6666030883789,
+        "y": 1434.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9f44fe62.bf738",
+        "type": "http request",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff6 poll",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.133",
+        "tls": "",
+        "x": 317.16663360595703,
+        "y": 1479.3333339691162,
+        "wires": [
+            [
+                "a6194861.1f1908"
+            ]
+        ]
+    },
+    {
+        "id": "a6194861.1f1908",
+        "type": "function",
+        "z": "a52dd6f7.34ea5",
+        "name": "Result calculator",
+        "func": "var stat = global.get(\"Sonoff6_webstat\");\n\nif (stat===undefined) {\n    stat = {count:0, OK:0, ECONNRESET:0, ENOTFOUND:0, ETIMEDOUT:0, other:0};\n}\nswitch (msg.statusCode) {\n    case 200:\n        stat.count++;\n        stat.OK++;\n        break;\n    case \"ECONNRESET\":\n        stat.count++;\n        stat.ECONNRESET++;\n        break;\n    case \"ENOTFOUND\":\n        stat.count++;\n        stat.ENOTFOUND++;\n        break;\n    case \"ETIMEDOUT\":\n        stat.count++;\n        stat.ETIMEDOUT++;\n        break;\n    default:    \n        stat.count++;\n        stat.other++;\n}\n\nglobal.set(\"Sonoff6_webstat\",stat);\n\nreturn [\n    {topic:\"OK\", payload:stat.OK},\n    {topic:\"Connection reset\", payload:stat.ECONNRESET},\n    {topic:\"Timed out\", payload:stat.ETIMEDOUT},\n    {topic:\"Not found\", payload:stat.ENOTFOUND},\n    {topic:\"Other error\", payload:stat.other}\n    ];\n",
+        "outputs": "5",
+        "noerr": 0,
+        "x": 553.1666030883789,
+        "y": 1477.3333339691162,
+        "wires": [
+            [
+                "f7b35551.cb1f8",
+                "1f479055.e1f1e8"
+            ],
+            [
+                "f7b35551.cb1f8",
+                "1f479055.e1f1e8"
+            ],
+            [
+                "f7b35551.cb1f8",
+                "1f479055.e1f1e8"
+            ],
+            [
+                "f7b35551.cb1f8",
+                "1f479055.e1f1e8"
+            ],
+            [
+                "1f479055.e1f1e8",
+                "f7b35551.cb1f8"
+            ]
+        ]
+    },
+    {
+        "id": "f7b35551.cb1f8",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff6 chart",
+        "group": "e57131c8.225da",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "x": 840.1666259765625,
+        "y": 1477.3333740234375,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1f479055.e1f1e8",
+        "type": "ui_chart",
+        "z": "a52dd6f7.34ea5",
+        "name": "Sonoff6 chart",
+        "group": "e57131c8.225da",
+        "order": 0,
+        "interpolate": "linear",
+        "nodata": "",
+        "removeOlder": 1,
+        "removeOlderUnit": "604800",
+        "x": 839.6666030883789,
+        "y": 1518.3333339691162,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c7f566a7.1880b",
+        "type": "json",
+        "z": "7750cd37.94cdd4",
+        "name": "Data",
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "e9342a78.0e6988",
+                "10dcc387.93f004",
+                "3ce4c465.8b5d24",
+                "e3f17966.0e2c88",
+                "c27161e5.bf2078",
+                "c583a21e.99f81"
+            ]
+        ]
+    },
+    {
+        "id": "cafcdfdb.aecf08",
+        "type": "exec",
+        "z": "7750cd37.94cdd4",
+        "command": "/usr/bin/zabbix_sender -v -z zabbix01.home.intra -s ",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Zabbix Sender",
+        "x": 820,
+        "y": 440,
+        "wires": [
+            [
+                "734dbfc9.2a17d8"
+            ],
+            [
+                "734dbfc9.2a17d8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "734dbfc9.2a17d8",
+        "type": "debug",
+        "z": "7750cd37.94cdd4",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 970,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e9342a78.0e6988",
+        "type": "function",
+        "z": "7750cd37.94cdd4",
+        "name": "Create Uptime Parameter",
+        "func": "var Newmsg={};\n//msg.payload = {};\n//msg.payload=Number(msg.payload.toFixed(2));\n//Newmsg.payload={};\n//Newmsg.payload.command=\"udevice\";\n//Newmsg.payload.idx = 42;\n//Newmsg.payload.nvalue=0;\n//Newmsg.payload.svalue = Number(msg.payload.toFixed(2));\n//Newmsg.payload.svalue = Newmsg.payload.svalue.toString();\nNewmsg.payload = msg.topic.split(\"/\")[1] + \" -k 1 -o \" + msg.payload.Uptime;\nreturn Newmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "cafcdfdb.aecf08",
+                "27512a14.68f4ae"
+            ]
+        ]
+    },
+    {
+        "id": "265c9d40.229232",
+        "type": "mqtt in",
+        "z": "7750cd37.94cdd4",
+        "name": "",
+        "topic": "tele/+/STATE",
+        "qos": "2",
+        "broker": "91e5cb32.258a3",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "c7f566a7.1880b"
+            ]
+        ]
+    },
+    {
+        "id": "10dcc387.93f004",
+        "type": "function",
+        "z": "7750cd37.94cdd4",
+        "name": "Create Vcc Parameter",
+        "func": "var Newmsg={};\n//msg.payload = {};\n//msg.payload=Number(msg.payload.toFixed(2));\n//Newmsg.payload={};\n//Newmsg.payload.command=\"udevice\";\n//Newmsg.payload.idx = 42;\n//Newmsg.payload.nvalue=0;\n//Newmsg.payload.svalue = Number(msg.payload.toFixed(2));\n//Newmsg.payload.svalue = Newmsg.payload.svalue.toString();\nNewmsg.payload = msg.topic.split(\"/\")[1] + \" -k 2 -o \" + msg.payload.Vcc;\nreturn Newmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "cafcdfdb.aecf08"
+            ]
+        ]
+    },
+    {
+        "id": "3ce4c465.8b5d24",
+        "type": "function",
+        "z": "7750cd37.94cdd4",
+        "name": "Create Power Parameter",
+        "func": "var Newmsg={};\n//msg.payload = {};\n//msg.payload=Number(msg.payload.toFixed(2));\n//Newmsg.payload={};\n//Newmsg.payload.command=\"udevice\";\n//Newmsg.payload.idx = 42;\n//Newmsg.payload.nvalue=0;\n//Newmsg.payload.svalue = Number(msg.payload.toFixed(2));\n//Newmsg.payload.svalue = Newmsg.payload.svalue.toString();\nif (msg.payload.POWER === undefined) {\n    Power = msg.payload.POWER1;\n} else {\n    Power = msg.payload.POWER;\n}\nNewmsg.payload = msg.topic.split(\"/\")[1] + \" -k 3 -o \" + Power;\nreturn Newmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 460,
+        "wires": [
+            [
+                "cafcdfdb.aecf08"
+            ]
+        ]
+    },
+    {
+        "id": "e3f17966.0e2c88",
+        "type": "function",
+        "z": "7750cd37.94cdd4",
+        "name": "Create RSSI Parameter",
+        "func": "var Newmsg={};\n//msg.payload = {};\n//msg.payload=Number(msg.payload.toFixed(2));\n//Newmsg.payload={};\n//Newmsg.payload.command=\"udevice\";\n//Newmsg.payload.idx = 42;\n//Newmsg.payload.nvalue=0;\n//Newmsg.payload.svalue = Number(msg.payload.toFixed(2));\n//Newmsg.payload.svalue = Newmsg.payload.svalue.toString();\nNewmsg.payload = msg.topic.split(\"/\")[1] + \" -k 4 -o \" + msg.payload.Wifi.RSSI;\nreturn Newmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 500,
+        "wires": [
+            [
+                "cafcdfdb.aecf08"
+            ]
+        ]
+    },
+    {
+        "id": "c27161e5.bf2078",
+        "type": "function",
+        "z": "7750cd37.94cdd4",
+        "name": "Create APMac Parameter",
+        "func": "var Newmsg={};\n//msg.payload = {};\n//msg.payload=Number(msg.payload.toFixed(2));\n//Newmsg.payload={};\n//Newmsg.payload.command=\"udevice\";\n//Newmsg.payload.idx = 42;\n//Newmsg.payload.nvalue=0;\n//Newmsg.payload.svalue = Number(msg.payload.toFixed(2));\n//Newmsg.payload.svalue = Newmsg.payload.svalue.toString();\nNewmsg.payload = msg.topic.split(\"/\")[1] + \" -k 5 -o \" + msg.payload.Wifi.APMac;\nreturn Newmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 540,
+        "wires": [
+            [
+                "cafcdfdb.aecf08"
+            ]
+        ]
+    },
+    {
+        "id": "674339f6.ba6d3",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Sonoff S20",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.37/in",
+        "tls": "",
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "8c682978.cc9e98"
+            ]
+        ]
+    },
+    {
+        "id": "11b41373.c3c9b5",
+        "type": "inject",
+        "z": "faf8b086.5ba97",
+        "name": "Start Inventory",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "x": 198,
+        "y": 212,
+        "wires": [
+            [
+                "674339f6.ba6d3",
+                "80751907.de89d",
+                "1a24d1e2.4b54ce",
+                "a324b3db.1883f8",
+                "ee2baf2e.0a9e6",
+                "e1ed06cf.11ac8",
+                "aaaf21f8.9ea858",
+                "9d087250.f59698"
+            ]
+        ]
+    },
+    {
+        "id": "847b9c9c.304f5",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Version",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 6 -o \" + version\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 280,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "e0d22386.fed9e",
+        "type": "exec",
+        "z": "faf8b086.5ba97",
+        "command": "/usr/bin/zabbix_sender -v -z zabbix01.home.intra -s ",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Send To Zabbix",
+        "x": 947.5,
+        "y": 322.5,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2d6e84a0.b05164",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Boot Count",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 9 -o \" + bootcount\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 400,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "a57c8629.4067e",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Write Count",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1].split(\" \")[0];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 8 -o \" + writecount\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "33f54cc9.8751ac",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Core",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 7 -o \\\"\" + core + \"\\\"\"\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 320,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "b2c126e6.123e",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Restart Reason",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[1];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 10 -o \\\"\" + restartreason + \"\\\"\"\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 440,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "12d21749.479701",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split ESP Chip ID",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 11 -o \" + espchipid;\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 480,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "d4853679.b89468",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Flash Chip ID",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 12 -o \" + flashchipid;\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 520,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "dbe08cbb.9d8f38",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Flash Size",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 13 -o \" + (flashsize*1024);\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 560,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "18bfdc91.f31c43",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Program Flash",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 14 -o \" + (programflash*1024);\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 600,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "dab9c342.760828",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Program Size",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 15 -o \" + (programsize*1024);\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 640,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "3d4436be.bd6cd2",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Free Program Space",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 16 -o \" + (freeprogramspace * 1024);\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 680,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "404e9b10.cf6bfc",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Split Free Memory",
+        "func": "msg.payload=msg.payload.split(\"<tr>\")[2];\nmsg.payload=msg.payload.split(\"}1\");\n\nvar Newmsg={};\nNewmsg.payload={};\nvar host=msg.topic;\nvar version=msg.payload[0].split(\"}2\")[1];\nvar core=msg.payload[2].split(\"}2\")[1];\nvar writecount=msg.payload[4].split(\"}2\")[1];\nvar bootcount=msg.payload[5].split(\"}2\")[1];\nvar restartreason=msg.payload[6].split(\"}2\")[2];\nvar espchipid=msg.payload[29].split(\"}2\")[1];\nvar flashchipid=msg.payload[30].split(\"}2\")[1];\nvar flashsize=msg.payload[31].split(\"}2\")[1].split(\"kB\")[0];\nvar programflash=msg.payload[32].split(\"}2\")[1].split(\"kB\")[0];\nvar programsize=msg.payload[33].split(\"}2\")[1].split(\"kB\")[0];\nvar freeprogramspace=msg.payload[34].split(\"}2\")[1].split(\"kB\")[0];\nvar freememory=msg.payload[35].split(\"}2\")[1].split(\"kB\")[0];\n\nNewmsg.payload=host + \" -k 17 -o \" + (freememory * 1024);\n\nreturn Newmsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 720,
+        "wires": [
+            [
+                "e0d22386.fed9e"
+            ]
+        ]
+    },
+    {
+        "id": "8c682978.cc9e98",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"sonoffs20\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 200,
+        "y": 360,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "12d21749.479701",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "18bfdc91.f31c43",
+                "dab9c342.760828",
+                "3d4436be.bd6cd2",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "80751907.de89d",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Audio",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.13/in",
+        "tls": "",
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "1fcaabb6.e4836c"
+            ]
+        ]
+    },
+    {
+        "id": "1fcaabb6.e4836c",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"audio\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 200,
+        "y": 500,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "18bfdc91.f31c43",
+                "dab9c342.760828",
+                "3d4436be.bd6cd2",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "1a24d1e2.4b54ce",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Kachel",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.30/in",
+        "tls": "",
+        "x": 200,
+        "y": 560,
+        "wires": [
+            [
+                "5e155171.b0a76"
+            ]
+        ]
+    },
+    {
+        "id": "5e155171.b0a76",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"kachel\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 200,
+        "y": 620,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "12d21749.479701",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "dab9c342.760828",
+                "3d4436be.bd6cd2",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "a324b3db.1883f8",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Led Tara",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.33/in",
+        "tls": "",
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "7aa9fc69.7f4f5c"
+            ]
+        ]
+    },
+    {
+        "id": "7aa9fc69.7f4f5c",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"ledtara\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 200,
+        "y": 740,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "12d21749.479701",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "18bfdc91.f31c43",
+                "dab9c342.760828",
+                "3d4436be.bd6cd2",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "ee2baf2e.0a9e6",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Zolder",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.12/in",
+        "tls": "",
+        "x": 200,
+        "y": 800,
+        "wires": [
+            [
+                "a9121129.4dbf48"
+            ]
+        ]
+    },
+    {
+        "id": "a9121129.4dbf48",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"zolder\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 200,
+        "y": 860,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "12d21749.479701",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "18bfdc91.f31c43",
+                "dab9c342.760828",
+                "3d4436be.bd6cd2",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "c583a21e.99f81",
+        "type": "debug",
+        "z": "7750cd37.94cdd4",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 565,
+        "y": 143,
+        "wires": []
+    },
+    {
+        "id": "e1ed06cf.11ac8",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Bed Tara",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.39/in",
+        "tls": "",
+        "x": 210,
+        "y": 920,
+        "wires": [
+            [
+                "6965ac06.75df2c"
+            ]
+        ]
+    },
+    {
+        "id": "6965ac06.75df2c",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"bedtara\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 200,
+        "y": 980,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "12d21749.479701",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "18bfdc91.f31c43",
+                "dab9c342.760828",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "aaaf21f8.9ea858",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request SonofS20-1",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.40/in",
+        "tls": "",
+        "x": 520,
+        "y": 920,
+        "wires": [
+            [
+                "e694d8ea.65c6c8"
+            ]
+        ]
+    },
+    {
+        "id": "e694d8ea.65c6c8",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"sonoffs20-1\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 980,
+        "wires": [
+            [
+                "404e9b10.cf6bfc",
+                "3d4436be.bd6cd2",
+                "dab9c342.760828",
+                "18bfdc91.f31c43",
+                "dbe08cbb.9d8f38",
+                "d4853679.b89468",
+                "12d21749.479701",
+                "b2c126e6.123e",
+                "2d6e84a0.b05164",
+                "a57c8629.4067e",
+                "33f54cc9.8751ac",
+                "847b9c9c.304f5"
+            ]
+        ]
+    },
+    {
+        "id": "9d087250.f59698",
+        "type": "http request",
+        "z": "faf8b086.5ba97",
+        "name": "Request Tuin",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.254.42/in",
+        "tls": "",
+        "x": 780,
+        "y": 920,
+        "wires": [
+            [
+                "5046be0.9c623c4"
+            ]
+        ]
+    },
+    {
+        "id": "5046be0.9c623c4",
+        "type": "function",
+        "z": "faf8b086.5ba97",
+        "name": "Add hostname",
+        "func": "var host=\"tuin\";\nmsg.topic=host;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 780,
+        "y": 980,
+        "wires": [
+            [
+                "847b9c9c.304f5",
+                "33f54cc9.8751ac",
+                "a57c8629.4067e",
+                "2d6e84a0.b05164",
+                "b2c126e6.123e",
+                "12d21749.479701",
+                "d4853679.b89468",
+                "dbe08cbb.9d8f38",
+                "18bfdc91.f31c43",
+                "dab9c342.760828",
+                "3d4436be.bd6cd2",
+                "404e9b10.cf6bfc"
+            ]
+        ]
+    },
+    {
+        "id": "27512a14.68f4ae",
+        "type": "debug",
+        "z": "7750cd37.94cdd4",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 718,
+        "y": 268,
+        "wires": []
+    }
+]
